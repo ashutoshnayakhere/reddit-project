@@ -1,3 +1,4 @@
+//
 import React,{useState} from 'react';
 import './view.css';
 import * as Icon from 'react-bootstrap-icons';
@@ -5,27 +6,41 @@ import * as Icon from 'react-bootstrap-icons';
 // import {Icon} from 'react-icons-kit'
 // import {trash} from 'react-icons-kit/feather/trash'
 
-export const View = ({books,deleteBook}) => {
+export const View = ({books=[],deleteBook, setbooks}) => {
     
-    const [count, setCount] = useState(0);
     const [dislike, setdisLike] = useState(0);
     
 
   // Function to increment count by 1
-  const incrementCount = () => {
+  const incrementCount = (postId, index) => {
     // Update state with incremented value
-    setCount(count + 1);
+    const likeBook = books[index];
+    const newBookObj ={
+      ...likeBook,
+      like: likeBook.like+1
+    }
+   
+ books.splice(index, 1, newBookObj);
+   setbooks([...books])
     
   };
-  const decrementCount = () => {
+  const decrementCount = (postId, index) => {
     // Update state with incremented value
-    setdisLike(dislike + 1);
+    const dislikeBook = books[index];
+    const newBookObj2 ={
+      ...dislikeBook,
+      dislike: dislikeBook.dislike+1
+    }
+   
+ books.splice(index, 1, newBookObj2);
+   setbooks([...books])
+    
   };
+  
+  
 
 
-
-
-    return books.map(book=>(
+    return books.map((book, index)=>(
         <>
         <tr key={book.isbn}>
            
@@ -69,10 +84,10 @@ export const View = ({books,deleteBook}) => {
     </tr>
     <tr>
 
-      <td > <button type="button" class="btn btn-primary" onClick={incrementCount} >Like</button></td>
-            <td><input type='text' class="form-control count counts" value={count} disabled/></td>  
-      <td><button type="button" class="btn btn-warning" onClick={decrementCount} >dislike</button></td>
-      <td><input type='text' class="form-control count" value={dislike} disabled/></td>  
+      <td > <button type="button" class="btn btn-primary" onClick={()=>incrementCount(book.postId, index)} >Like</button></td>
+            <td><input type='text' class="form-control count counts" value={book.like} disabled/></td>  
+      <td><button type="button" class="btn btn-warning" onClick={()=>decrementCount(book.postId, index)}  >dislike</button></td>
+      <td><input type='text' class="form-control count" value={book.dislike} disabled/></td>  
       <td><input type="text" class="form-control output" value={book.title} disabled/> </td>
     </tr>
 

@@ -1,107 +1,128 @@
-import React,{useState} from 'react'
-import Login from './Login';
+import React, { useState } from "react";
+import { Form, Alert } from "react-bootstrap";
+import Login from "./Login";
 
 function Registration() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [phone, setPhone] = useState("");
-   
-    const [flag, setFlag] = useState(false);
-    const [login, setLogin] = useState(true);
-    
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [profession, setProfession] = useState("");
+
+  const [flag, setFlag] = useState(false);
+  const [login, setLogin] = useState(true);
   
-    function handleFormSubmit(e) {
-        e.preventDefault();
-    
-        if (!name || !email || !password || !phone ) {
-          setFlag(true);
-        } else {
-          setFlag(false);
-          localStorage.setItem("YourEmail", JSON.stringify(email));
-          localStorage.setItem(
-            "YourPassword",
-            JSON.stringify(password)
-          );
-          console.log("Saved in Local Storage");
-    
-        }
-      }
-    
+
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
+    if (!name || !email || !password || !phone ) {
+      setFlag(true);
+    } else {
+      setFlag(false);
+      localStorage.setItem("userEmail", JSON.stringify(email));
+      localStorage.setItem(
+        "userPassword",
+        JSON.stringify(password)
+      );
+      console.log("Saved in Local Storage");
+
+      setLogin(!login);
+    }
+  }
+
+  function handleClick() {
+    setLogin(!login);
+  }
+
+ 
   
-      function handleClick() {
-        setLogin(!login);
-      }
 
-    return (
-  <>
-
-
-<div className="container mt-5">
-    <div className="row">
-    
-     
-        {" "}
+  return (
+    <>
+ 
+        <div>
+          {" "}
           {login ? (
-            
-        <form className="container" onSubmit={handleFormSubmit}>
-        <h3 className="text-center text-inverse">Register Here</h3>
-          <div className="row">
-            <div className="col-lg-6 col-sm-6 col-12">
-               <div className="form-group">
-                <label className="text-inverse" for="validationCustom01">First Name</label>
-                <input type="text" className="form-control"  placeholder="First name"  onChange={(event) => setName(event.target.value)} required/>
-              </div>
-            </div>
-            <div className="col-lg-6 col-sm-6 col-12">
+            <form onSubmit={handleFormSubmit}>
+              <h3>Register</h3>
+
               <div className="form-group">
-                <label className="text-inverse" for="validationCustom02">Email Address</label>
-                <input type="email" className="form-control"  placeholder="Email"  onChange={(event) => setEmail(event.target.value)} required/>
-              </div>  
-            </div>
-
-            <div className="col-lg-6 col-sm-6 col-12 mt-4">
-               <div className="form-group">
-                <label className="text-inverse" for="validationCustom01">Phone Number</label>
-                <input type="text" className="form-control"  placeholder="Phone Number"  onChange={(event) => setPhone(event.target.value)} required/>
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter Full Name"
+                  name="name"
+                  onChange={(event) => setName(event.target.value)}
+                />
               </div>
-            </div>
 
-            <div className="col-lg-6 col-sm-6 col-12 mt-4">
-               <div className="form-group">
-                <label className="text-inverse" for="validationCustom01">Enter Your Password</label>
-                <input type="text" className="form-control"  placeholder="Enter Your Password"  onChange={(event) => setPassword(event.target.value)} required/>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter email"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
               </div>
-            </div>
-         
-          </div>
 
-     
+              <div className="form-group">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </div>
 
-          <div className="row">
-            <div className="col-lg-12 col-sm-12 col-12 mb-4 mt-4 text-center">
-                <button type="submit" className="btn btn-primary"  onClick={handleClick} >Submit form</button>
-            </div>
-          </div>  
+              <div className="form-group">
+                <label>Phone No.</label>
+                <input
+                  type="Phone"
+                  className="form-control"
+                  placeholder="Enter contact no"
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </div>
 
-          {flag && (
-            <Alert color="primary" variant="warning">
-              Fill correct Info else keep trying.
-            </Alert>
-          )}
-        </form>
+              <div className="form-group">
+                <label>Choose your Profession</label>
+                <Form.Control
+                  as="select"
+                  onChange={(event) => setProfession(event.target.value)}
+                >
+                  <option>Select</option>
+                  <option>Artist</option>
+                  <option>Photographer</option>
+                  <option>Team Player</option>
+                  <option>Full Stack</option>
+                </Form.Control>
+              </div>
+
+              <button type="submit" className="btn btn-dark btn-lg btn-block">
+                Register
+              </button>
+              <p onClick={handleClick} className="forgot-password text-right">
+                Already registered{" "}log in?
+                
+              </p>
+              {flag && (
+                <Alert color="primary" variant="danger">
+                  I got it you are in hurry! But every Field is important!
+                </Alert>
+              )}
+            </form>
           ) : (
-            
             <Login />
           )}
-      
-      </div>
-      
-    </div>  
-
-
-  </>  
-    );
+        </div>
+    
+    </>
+  );
 }
 
-export default Registration
+export default Registration;

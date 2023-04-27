@@ -1,5 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import { View } from '../View';
+
+
 // import Registration from '../Registration';
 
 // getting the values of local storage
@@ -40,8 +42,6 @@ export const Home = () => {
    setbooks([...books,book]);
     setTitle('');
 localStorage.setItem('books',JSON.stringify(books));
-setCount(0);
-setdislike(0);
 
 
   }
@@ -57,11 +57,22 @@ setdislike(0);
   // saving data to local storage
   useEffect(()=>{
     localStorage.setItem('books',JSON.stringify(books));
+    // console.log(books, "booksbooksbooksbooksbooksbooks");
   },[books])
 
   return (
  
  <>
+ 
+<div class="navigation">
+  
+	<a class="button btn btn-primary" href="/">LOGOUT</a>
+  
+</div>
+
+  
+
+
 
 
 <div className="mt-3 modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,6 +80,8 @@ setdislike(0);
     <div className="modal-content p-3">
       <div className="modal-header">
         <h1 className="modal-title fs-5" id="exampleModalLabel">Add New Post</h1>
+        
+      
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className='form-container p-3'>
@@ -104,7 +117,7 @@ setdislike(0);
               <table className='table'>
           
                 <tbody>
-                  <View books={books} deleteBook={deleteBook}/>
+                  <View books={books} setbooks={setbooks}  deleteBook={deleteBook}/>
                 </tbody>
               </table>
             </div>
@@ -123,3 +136,4 @@ setdislike(0);
 }
 
 export default Home
+//Home.jsx

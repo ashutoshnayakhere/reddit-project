@@ -7,7 +7,7 @@ function App() {
     <>
   
   
-< Home/>
+< Registration/>
 </>
   )
 }

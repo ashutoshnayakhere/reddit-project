@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Alert } from "react-bootstrap";
 import Home from "./src/Home";
 
-
 function Login() {
   const [emaillog, setEmaillog] = useState(" ");
   const [passwordlog, setPasswordlog] = useState(" ");
@@ -14,9 +13,9 @@ function Login() {
   function handleLogin(e) {
     e.preventDefault();
     let pass = localStorage
-      .getItem("YourPassword")
+      .getItem("userPassword")
       .replace(/"/g, "");
-    let mail = localStorage.getItem("YourEmail").replace(/"/g, "");
+    let mail = localStorage.getItem("userEmail").replace(/"/g, "");
     
 
     if (!emaillog || !passwordlog) {
@@ -66,9 +65,8 @@ function Login() {
           )}
         </form>
       ) : (
-     <Home/>
+        <Home />
       )}
-       
     </div>
   );
 }
