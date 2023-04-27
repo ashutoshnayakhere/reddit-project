@@ -1,9 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import { View } from '../View';
-import Registration from '../Registration';
-
-;
-
+// import Registration from '../Registration';
 
 // getting the values of local storage
 const getDatafromLS=()=>{
@@ -16,27 +13,36 @@ const getDatafromLS=()=>{
   }
 }
 
+let PostArray=[];
+
 export const Home = () => {
+  let filteredData = PostArray.filter(item => item?.username === JSON.parse(localStorage.getItem("currentValue"))?.uname);
 
   // main array of objects state || books state || books array of objects
   const [books, setbooks]=useState(getDatafromLS());
 
   // input field states
   const [title, setTitle]=useState('');
-  const [author, setAuthor]=useState('');
-  const [isbn, setIsbn]=useState('');
+
+
 
   // form submit event
   const handleAddBookSubmit=(e)=>{
     e.preventDefault();
     // creating an object
     let book={
-      title,
-      author,
-      isbn
-    }
-    setbooks([...books,book]);
+      postId:books.length+1,
+      title:title,
+      like:0,
+      dislike:0
+            }
+
+   setbooks([...books,book]);
     setTitle('');
+localStorage.setItem('books',JSON.stringify(books));
+setCount(0);
+setdislike(0);
+
 
   }
 
@@ -55,7 +61,6 @@ export const Home = () => {
 
   return (
  
- //for try
  <>
 
 
@@ -75,8 +80,7 @@ export const Home = () => {
             <br></br>
            
      
-
-            <div class="modal-footer">
+                 <div class="modal-footer">
         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       
         <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >ADD </button>
@@ -94,33 +98,11 @@ export const Home = () => {
       <button type="button" className="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add Your Post Here</button>
 
       <div className='main'>
-
-        {/* <div className='form-container'>
-          <form autoComplete="off" className='form-group'
-          onSubmit={handleAddBookSubmit}>
-            <label>Title</label>
-            <input type="text" className='form-control' required
-            onChange={(e)=>setTitle(e.target.value)} value={title}></input>
-            <br></br>
-           
-            <button type="submit" className='btn btn-danger btn-md'>
-              ADD
-            </button>
-          </form>
-        </div> */}
-
         <div className='view-container'>
           {books.length>0&&<>
             <div className='table-responsive'>
               <table className='table'>
-                <thead>
-                  {/* <tr>
-                    <th>ISBN#</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Delete</th>
-                  </tr> */}
-                </thead>
+          
                 <tbody>
                   <View books={books} deleteBook={deleteBook}/>
                 </tbody>
@@ -134,7 +116,7 @@ export const Home = () => {
 
       </div>
    
-    </div>
+   </div>
     </>
  
   )
